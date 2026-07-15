@@ -1,0 +1,21 @@
+package com.compilerprogramming.ezlang.compiler.node;
+
+import com.compilerprogramming.ezlang.compiler.util.SB;
+import com.compilerprogramming.ezlang.compiler.type.Type;
+
+import java.util.BitSet;
+
+/**
+   A constant with external linkage.
+ */
+
+public class ExternNode extends ConstantNode {
+    public final String _extern;
+    public ExternNode(Type t, String ex) { super(t); _extern = ex; }
+
+    @Override public String  label() { return "#"+_con+":"+_extern; }
+    @Override public String glabel() { return _con.print(new SB().p("#")).p(":").p(_extern).toString(); }
+    @Override public String uniqueName() { return "Extern_" + _nid; }
+
+    @Override public boolean eq(Node n) { return this==n; }
+}

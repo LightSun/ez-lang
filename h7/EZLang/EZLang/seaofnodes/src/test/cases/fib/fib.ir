@@ -1,0 +1,45 @@
+START:                            [[   ]]
+   7 Start   ____ ____ ____       [[    13   16   22   27    6  ]]  [  Ctrl, #TOP, int]
+
+L6:                               [[  START      ]]
+   6 fib     ____    7            [[    12   15   21   18    5  ]]  Ctrl
+  12 n          6   13            [[    11       ]]  int
+  15 $mem       6   16            [[     2       ]]  #BOT
+  21 $rpc       6   22            [[     2       ]]  $[ALL]
+  18 #1         6                 [[    17   20  ]]  1
+
+L27:                              [[  START      ]]
+  27 foo     ____    7            [[    28   32   29   26  ]]  Ctrl
+  28 $mem      27   16            [[    26       ]]  #BOT
+  32 $rpc      27   22            [[    23       ]]  $[ALL]
+  29 #10       27                 [[    26       ]]  10
+  26 call      27   28   29       [[    25       ]]  Ctrl
+
+LOOP5:                            [[  L6        L8         ]]
+   5 Loop    ____    6    8       [[    11   17   20    9    4  ]]  Ctrl
+  11 Phi_i      5   12   14       [[     9   14  ]]  int
+  17 Phi_f2     5   18   19       [[     2   19   20  ]]  int
+  20 Phi_f1     5   18   17       [[    19       ]]  int
+   9 cmp        5   11            [[     4       ]]  bool
+   4 j>         5    9            [[     3    8  ]]  [  Ctrl, Ctrl]
+
+L25:                              [[  L27        ]]
+  25 CallEnd   26                 [[    24   30   31  ]]  [  Ctrl, #BOT, int]
+  30 $mem      25                 [[    23       ]]  #BOT
+  31 #2        25                 [[    23       ]]  int
+
+L3:                               [[  LOOP5      ]]
+   3 False      4                 [[     2       ]]  Ctrl
+   2 Return     3   15   17   21  [[     1       ]]  [  Ctrl, #BOT, int]
+
+L24:                              [[  L25        ]]
+  24 $ctrl     25                 [[    23       ]]  Ctrl
+  23 Return    24   30   31   32  [[     1       ]]  [  Ctrl, #BOT, int]
+
+L8:                               [[  LOOP5      ]]
+   8 True       4                 [[    14   19    5  ]]  Ctrl
+  14 dec        8   11            [[    11       ]]  int
+  19 add        8   17   20       [[    17       ]]  int
+
+L1:                               [[   ]]
+   1 Stop       2   23            [[             ]]  Bot

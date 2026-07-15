@@ -1,0 +1,14 @@
+rootProject.name = 'EZLang'
+include 'EZLang'
+//
+include 'EZLang:StackVM'
+findProject(':EZLang:StackVM')?.name = 'StackVM'
+include 'EZLang:OptVM'
+findProject(':EZLang:OptVM')?.name = 'OptVM'
+//
+include 'EZLang:registervm'
+findProject(':EZLang:registervm')?.name = 'registervm'
+//
+include 'EZLang:seaofnodes'
+findProject(':EZLang:seaofnodes')?.name = 'seaofnodes'
+

@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+
+    maven {url "https://maven.aliyun.com/nexus/content/groups/public"}
+    maven { url "https://jitpack.io" }
+    maven { url "https://maven.aliyun.com/repository/public" }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.projectlombok:lombok:1.18.22'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+//    implementation("org.docx4j:docx4j-JAXB-MOXy:8.3.8")
+//    implementation("org.docx4j:docx4j-export-fo:8.3.8")
+//    compileOnly("org.projectlombok:lombok:1.18.24")
+//    annotationProcessor("org.projectlombok:lombok:1.18.24")
+//
+//    implementation "com.github.LightSun.Java-base:base:1.2.7"
+//    implementation 'com.google.code.gson:gson:2.10'
+//
+//    implementation "com.alibaba:easyexcel:4.0.3"
+//
+//    implementation "org.slf4j:slf4j-api:1.7.32"
+//    implementation "org.slf4j:slf4j-simple:1.7.32"
+//    implementation "org.antlr:antlr4:4.9.3"
+//    implementation "commons-io:commons-io:2.11.0"
+//    implementation "commons-cli:commons-cli:1.5.0"
+//    implementation "org.apache.commons:commons-text:1.9"
+//    implementation "com.github.julianthome:inmemantlr-api:1.9.2"
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task pkgDocMainGenerator(type: Jar) {
+    archiveFileName = "DocMainGenerator.jar"
+    from sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes("Main-Class": "com.heaven7.main.DocMainGenerator",
+                "Implementation-Title": "Gradle",
+                'Implementation-Version': version,
+        )
+    }
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
